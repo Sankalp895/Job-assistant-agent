@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to AI Job Assistant - Onboarding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --bg-gradient-start: #0f172a;
+            --bg-gradient-end: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -250px;
+            right: -250px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -200px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 30px) scale(1.1); }
+        }
+
+        .onboarding-container {
+            max-width: 700px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            transition: width 0.4s ease;
+            z-index: 1;
+        }
+
+        .step-indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85em;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-color: var(--primary);
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .step-indicator.completed {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .step-indicator.completed::after {
+            content: '✓';
+            color: white;
+        }
+
+        /* Step Content */
+        .step-content {
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            position: relative;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-label {
+            display: block;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .radio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .radio-item {
+            position: relative;
+        }
+
+        .radio-item input[type="radio"] {
+            display: none;
+        }
+
+        .radio-label {
+            display: block;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .radio-label:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .radio-item input[type="radio"]:checked + .radio-label {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .location-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .add-location-btn {
+            padding: 14px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .add-location-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .location-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .location-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .location-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .location-tag .remove:hover {
+            opacity: 1;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .toggle-switch input[type="checkbox"] {
+            display: none;
+        }
+
+        .toggle-slider {
+            width: 56px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+            background: var(--primary);
+        }
+
+        .toggle-switch input[type="checkbox"]:checked + .toggle-slider::after {
+            left: 31px;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-back:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-skip {
+            background: transparent;
+            color: var(--text-muted);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 24px;
+        }
+
+        .btn-skip:hover {
+            color: var(--text-secondary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .onboarding-container {
+                padding: 30px 20px;
+            }
+
+            .logo h1 {
+                font-size: 2em;
+            }
+
+            .checkbox-grid,
+            .radio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="onboarding-container">
+        <div class="logo">
+            <h1>🚀 AI Job Assistant</h1>
+            <p>Let's personalize your job search experience</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-line" id="progressLine"></div>
+                <div class="step-indicator active" data-step="1">1</div>
+                <div class="step-indicator" data-step="2">2</div>
+                <div class="step-indicator" data-step="3">3</div>
+                <div class="step-indicator" data-step="4">4</div>
+                <div class="step-indicator" data-step="5">5</div>
+                <div class="step-indicator" data-step="6">6</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Values -->
+        <div class="step-content active" data-step="1">
+            <h2 class="step-title">What matters most to you?</h2>
+            <p class="step-description">Select all the values that are important to you in your next role.</p>
+            <div class="form-group">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value1" value="Competitive Compensation">
+                        <label class="checkbox-label" for="value1">💰 Competitive Compensation</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value2" value="Work-Life Balance">
+                        <label class="checkbox-label" for="value2">⚖️ Work-Life Balance</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value3" value="Career Growth">
+                        <label class="checkbox-label" for="value3">📈 Career Growth</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value4" value="Company Culture">
+                        <label class="checkbox-label" for="value4">🤝 Company Culture</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value5" value="Making Impact">
+                        <label class="checkbox-label" for="value5">🌟 Making Impact</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value6" value="Flexibility">
+                        <label class="checkbox-label" for="value6">🏡 Flexibility</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value7" value="Benefits & Perks">
+                        <label class="checkbox-label" for="value7">🎁 Benefits & Perks</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="value8" value="Job Security">
+                        <label class="checkbox-label" for="value8">🔒 Job Security</label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-message" id="error-step1">Please select at least one value.</div>
+        </div>
+
+        <!-- Step 2: Field -->
+        <div class="step-content" data-step="2">
+            <h2 class="step-title">What's your field?</h2>
+            <p class="step-description">Choose the primary industry you're interested in.</p>
+            <div class="form-group">
+                <div class="radio-grid">
+                    <div class="radio-item">
+                        <input type="radio" id="field1" name="field" value="Technology">
+                        <label class="radio-label" for="field1">💻 Technology</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field2" name="field" value="Healthcare">
+                        <label class="radio-label" for="field2">🏥 Healthcare</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field3" name="field" value="Finance">
+                        <label class="radio-label" for="field3">💼 Finance</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field4" name="field" value="Education">
+                        <label class="radio-label" for="field4">📚 Education</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field5" name="field" value="Marketing">
+                        <label class="radio-label" for="field5">📢 Marketing</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field6" name="field" value="Design">
+                        <label class="radio-label" for="field6">🎨 Design</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field7" name="field" value="Sales">
+                        <label class="radio-label" for="field7">📊 Sales</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field8" name="field" value="Engineering">
+                        <label class="radio-label" for="field8">⚙️ Engineering</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field9" name="field" value="Operations">
+                        <label class="radio-label" for="field9">🔧 Operations</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="field10" name="field" value="Other">
+                        <label class="radio-label" for="field10">🌐 Other</label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-message" id="error-step2">Please select a field.</div>
+        </div>
+
+        <!-- Step 3: Subfield -->
+        <div class="step-content" data-step="3">
+            <h2 class="step-title">Choose your subfield</h2>
+            <p class="step-description">Select the specific area within your field.</p>
+            <div class="form-group">
+                <div class="radio-grid" id="subfieldOptions">
+                    <!-- Dynamically populated based on field selection -->
+                </div>
+            </div>
+            <div class="error-message" id="error-step3">Please select a subfield.</div>
+        </div>
+
+        <!-- Step 4: Specialization -->
+        <div class="step-content" data-step="4">
+            <h2 class="step-title">What's your specialization?</h2>
+            <p class="step-description">Pick your area of expertise.</p>
+            <div class="form-group">
+                <div class="radio-grid" id="specializationOptions">
+                    <!-- Dynamically populated based on subfield selection -->
+                </div>
+            </div>
+            <div class="error-message" id="error-step4">Please select a specialization.</div>
+        </div>
+
+        <!-- Step 5: Location -->
+        <div class="step-content" data-step="5">
+            <h2 class="step-title">Where do you want to work?</h2>
+            <p class="step-description">Add your preferred locations or select remote work.</p>
+            <div class="form-group">
+                <label>Add Locations</label>
+                <div class="location-input-group">
+                    <input type="text" id="locationInput" placeholder="e.g., San Francisco, CA">
+                    <button class="add-location-btn" onclick="addLocation()">Add</button>
+                </div>
+                <div class="location-tags" id="locationTags"></div>
+                
+                <div class="toggle-switch">
+                    <input type="checkbox" id="remoteToggle">
+                    <label class="toggle-slider" for="remoteToggle"></label>
+                    <span class="toggle-label">Open to Remote Work</span>
+                </div>
+            </div>
+            <div class="error-message" id="error-step5">Please add at least one location or select remote work.</div>
+        </div>
+
+        <!-- Step 6: Role Level -->
+        <div class="step-content" data-step="6">
+            <h2 class="step-title">What's your experience level?</h2>
+            <p class="step-description">Select the role level you're targeting.</p>
+            <div class="form-group">
+                <div class="radio-grid">
+                    <div class="radio-item">
+                        <input type="radio" id="level1" name="level" value="Entry Level">
+                        <label class="radio-label" for="level1">🌱 Entry Level</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="level2" name="level" value="Mid-Level">
+                        <label class="radio-label" for="level2">🚀 Mid-Level</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="level3" name="level" value="Senior">
+                        <label class="radio-label" for="level3">⭐ Senior</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="level4" name="level" value="Lead/Principal">
+                        <label class="radio-label" for="level4">👑 Lead/Principal</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="level5" name="level" value="Executive/Director">
+                        <label class="radio-label" for="level5">💎 Executive/Director</label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-message" id="error-step6">Please select your experience level.</div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="btn btn-back" id="backBtn" onclick="previousStep()" disabled>← Back</button>
+            <button class="btn btn-skip" id="skipBtn" onclick="skipStep()" style="display: none;">Skip</button>
+            <button class="btn btn-next" id="nextBtn" onclick="nextStep()">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:8000/api";
+        let currentStep = 1;
+        const totalSteps = 6;
+        let locations = [];
+
+        // Subfield and Specialization mappings
+        const subfieldMap = {
+            "Technology": ["Software Development", "Data Science", "DevOps", "Cybersecurity", "Cloud Computing", "AI/ML", "Product Management", "QA/Testing"],
+            "Healthcare": ["Nursing", "Medical Research", "Healthcare Administration", "Clinical Practice", "Public Health", "Pharmacy", "Medical Technology"],
+            "Finance": ["Investment Banking", "Financial Analysis", "Accounting", "Risk Management", "Wealth Management", "Fintech", "Corporate Finance"],
+            "Education": ["K-12 Teaching", "Higher Education", "Educational Technology", "Curriculum Development", "Administration", "Special Education"],
+            "Marketing": ["Digital Marketing", "Content Marketing", "Brand Management", "SEO/SEM", "Social Media", "Marketing Analytics", "Product Marketing"],
+            "Design": ["UI/UX Design", "Graphic Design", "Product Design", "Motion Graphics", "Brand Design", "Industrial Design"],
+            "Sales": ["B2B Sales", "B2C Sales", "Account Management", "Business Development", "Sales Engineering", "Inside Sales"],
+            "Engineering": ["Mechanical Engineering", "Electrical Engineering", "Civil Engineering", "Chemical Engineering", "Aerospace Engineering"],
+            "Operations": ["Supply Chain", "Logistics", "Project Management", "Process Improvement", "Quality Assurance", "Facilities Management"],
+            "Other": ["Consulting", "Research", "Writing", "Customer Service", "Human Resources", "Legal", "Other"]
+        };
+
+        const specializationMap = {
+            "Software Development": ["Frontend Development", "Backend Development", "Full-Stack Development", "Mobile Development", "Game Development", "Embedded Systems"],
+            "Data Science": ["Machine Learning", "Data Analysis", "Data Engineering", "Business Intelligence", "Statistical Modeling", "Big Data"],
+            "DevOps": ["CI/CD", "Infrastructure as Code", "Container Orchestration", "Site Reliability Engineering", "Cloud Architecture"],
+            "Cybersecurity": ["Network Security", "Application Security", "Security Operations", "Penetration Testing", "Compliance & Governance"],
+            "Cloud Computing": ["AWS", "Azure", "Google Cloud", "Multi-Cloud", "Cloud Migration", "Serverless"],
+            "AI/ML": ["Deep Learning", "Natural Language Processing", "Computer Vision", "Reinforcement Learning", "MLOps"],
+            "Product Management": ["Technical Product Management", "Growth Product Management", "Platform Product Management", "B2B Products", "Consumer Products"],
+            "QA/Testing": ["Manual Testing", "Automation Testing", "Performance Testing", "Security Testing", "Mobile Testing"],
+            // Add more mappings for other subfields
+            "default": ["Generalist", "Specialist", "Consultant", "Manager", "Analyst", "Coordinator"]
+        };
+
+        // Update progress bar
+        function updateProgress() {
+            const progressLine = document.getElementById('progressLine');
+            const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressLine.style.width = progressPercent + '%';
+
+            // Update step indicators
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                const stepNum = index + 1;
+                indicator.classList.remove('active', 'completed');
+                if (stepNum < currentStep) {
+                    indicator.classList.add('completed');
+                    indicator.textContent = '';
+                } else if (stepNum === currentStep) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.textContent = stepNum;
+                }
+            });
+        }
+
+        // Show specific step
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
+
+            // Update buttons
+            document.getElementById('backBtn').disabled = step === 1;
+            const nextBtn = document.getElementById('nextBtn');
+            if (step === totalSteps) {
+                nextBtn.textContent = 'Complete ✓';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+
+            updateProgress();
+        }
+
+        // Validate current step
+        function validateStep(step) {
+            const errorEl = document.getElementById(`error-step${step}`);
+            errorEl.classList.remove('show');
+
+            switch(step) {
+                case 1: // Values
+                    const checkedValues = document.querySelectorAll('.step-content[data-step="1"] input[type="checkbox"]:checked');
+                    if (checkedValues.length === 0) {
+                        errorEl.classList.add('show');
+                        return false;
+                    }
+                    break;
+                case 2: // Field
+                    const selectedField = document.querySelector('input[name="field"]:checked');
+                    if (!selectedField) {
+                        errorEl.classList.add('show');
+                        return false;
+                    }
+                    break;
+                case 3: // Subfield
+                    const selectedSubfield = document.querySelector('input[name="subfield"]:checked');
+                    if (!selectedSubfield) {
+                        errorEl.classList.add('show');
+                        return false;
+                    }
+                    break;
+                case 4: // Specialization
+                    const selectedSpec = document.querySelector('input[name="specialization"]:checked');
+                    if (!selectedSpec) {
+                        errorEl.classList.add('show');
+                        return false;
+                    }
+                    break;
+                case 5: // Location
+                    const remoteChecked = document.getElementById('remoteToggle').checked;
+                    if (locations.length === 0 && !remoteChecked) {
+                        errorEl.classList.add('show');
+                        return false;
+                    }
+                    break;
+                case 6: // Role Level
+                    const selectedLevel = document.querySelector('input[name="level"]:checked');
+                    if (!selectedLevel) {
+                        errorEl.classList.add('show');
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        }
+
+        // Next step
+        function nextStep() {
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            // Populate dynamic fields
+            if (currentStep === 2) {
+                const selectedField = document.querySelector('input[name="field"]:checked').value;
+                populateSubfields(selectedField);
+            } else if (currentStep === 3) {
+                const selectedSubfield = document.querySelector('input[name="subfield"]:checked').value;
+                populateSpecializations(selectedSubfield);
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            } else {
+                // Final step - save preferences
+                savePreferences();
+            }
+        }
+
+        // Previous step
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        // Skip step (optional for location)
+        function skipStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        // Populate subfields based on field
+        function populateSubfields(field) {
+            const container = document.getElementById('subfieldOptions');
+            const subfields = subfieldMap[field] || subfieldMap["Other"];
+            
+            container.innerHTML = subfields.map((subfield, index) => `
+                <div class="radio-item">
+                    <input type="radio" id="subfield${index}" name="subfield" value="${subfield}">
+                    <label class="radio-label" for="subfield${index}">${subfield}</label>
+                </div>
+            `).join('');
+        }
+
+        // Populate specializations based on subfield
+        function populateSpecializations(subfield) {
+            const container = document.getElementById('specializationOptions');
+            const specializations = specializationMap[subfield] || specializationMap["default"];
+            
+            container.innerHTML = specializations.map((spec, index) => `
+                <div class="radio-item">
+                    <input type="radio" id="spec${index}" name="specialization" value="${spec}">
+                    <label class="radio-label" for="spec${index}">${spec}</label>
+                </div>
+            `).join('');
+        }
+
+        // Add location
+        function addLocation() {
+            const input = document.getElementById('locationInput');
+            const location = input.value.trim();
+            
+            if (location && !locations.includes(location)) {
+                locations.push(location);
+                renderLocationTags();
+                input.value = '';
+            }
+        }
+
+        // Remove location
+        function removeLocation(location) {
+            locations = locations.filter(loc => loc !== location);
+            renderLocationTags();
+        }
+
+        // Render location tags
+        function renderLocationTags() {
+            const container = document.getElementById('locationTags');
+            container.innerHTML = locations.map(loc => `
+                <div class="location-tag">
+                    <span>${loc}</span>
+                    <span class="remove" onclick="removeLocation('${loc}')">×</span>
+                </div>
+            `).join('');
+        }
+
+        // Allow Enter key to add location
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('locationInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addLocation();
+                }
+            });
+        });
+
+        // Save preferences to backend and localStorage
+        async function savePreferences() {
+            const values = Array.from(document.querySelectorAll('.step-content[data-step="1"] input[type="checkbox"]:checked'))
+                .map(cb => cb.value);
+            const field = document.querySelector('input[name="field"]:checked').value;
+            const subfield = document.querySelector('input[name="subfield"]:checked').value;
+            const specialization = document.querySelector('input[name="specialization"]:checked').value;
+            const remotePreference = document.getElementById('remoteToggle').checked;
+            const roleLevel = document.querySelector('input[name="level"]:checked').value;
+
+            const preferences = {
+                user_id: generateUserId(),
+                values: values,
+                field: field,
+                subfield: subfield,
+                specialization: specialization,
+                locations: locations,
+                remote_preference: remotePreference,
+                role_level: roleLevel
+            };
+
+            // Save to localStorage
+            localStorage.setItem('userPreferences', JSON.stringify(preferences));
+            localStorage.setItem('onboardingCompleted', 'true');
+
+            // Save to backend
+            try {
+                const response = await fetch(`${API_BASE}/preferences`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(preferences)
+                });
+
+                if (response.ok) {
+                    // Redirect to main dashboard
+                    window.location.href = 'index.html';
+                } else {
+                    console.error('Failed to save preferences to backend');
+                    // Still redirect even if backend fails
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Error saving preferences:', error);
+                // Still redirect even if backend fails
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Generate unique user ID
+        function generateUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        // Initialize
+        showStep(1);
+    </script>
+</body>
+
+</html>
