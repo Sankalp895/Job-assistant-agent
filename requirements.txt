@@ -10,3 +10,4 @@ python-jobspy
 httpx
 beautifulsoup4
 pytest
+python-multipart
