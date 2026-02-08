@@ -992,16 +992,16 @@
 
                 if (response.ok) {
                     // Redirect to main dashboard
-                    window.location.href = 'index.html';
+                    window.location.href = 'dashboard.html';
                 } else {
                     console.error('Failed to save preferences to backend');
                     // Still redirect even if backend fails
-                    window.location.href = 'index.html';
+                    window.location.href = 'dashboard.html';
                 }
             } catch (error) {
                 console.error('Error saving preferences:', error);
                 // Still redirect even if backend fails
-                window.location.href = 'index.html';
+                window.location.href = 'dashboard.html';
             }
         }
 
