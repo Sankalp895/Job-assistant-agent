@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from fastapi import UploadFile, File, Form
 import PyPDF2
@@ -220,3 +221,6 @@ async def update_preferences(user_id: str, preferences: UserPreferences):
         return {"status": "success", "message": "Preferences updated successfully"}
     else:
         raise HTTPException(status_code=500, detail="Failed to update preferences")
+
+
+app.mount("/", StaticFiles(directory="forntend", html=True), name="frontend")
