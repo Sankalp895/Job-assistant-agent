@@ -67,8 +67,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, 30px) scale(1.1); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) scale(1.1);
+            }
         }
 
         .onboarding-container {
@@ -185,6 +192,7 @@
                 opacity: 0;
                 transform: translateX(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -250,7 +258,7 @@
             transform: translateY(-2px);
         }
 
-        .checkbox-item input[type="checkbox"]:checked + .checkbox-label {
+        .checkbox-item input[type="checkbox"]:checked+.checkbox-label {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
@@ -288,7 +296,7 @@
             transform: translateY(-2px);
         }
 
-        .radio-item input[type="radio"]:checked + .radio-label {
+        .radio-item input[type="radio"]:checked+.radio-label {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
@@ -400,11 +408,11 @@
             transition: all 0.3s ease;
         }
 
-        .toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+        .toggle-switch input[type="checkbox"]:checked+.toggle-slider {
             background: var(--primary);
         }
 
-        .toggle-switch input[type="checkbox"]:checked + .toggle-slider::after {
+        .toggle-switch input[type="checkbox"]:checked+.toggle-slider::after {
             left: 31px;
         }
 
@@ -484,9 +492,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
         }
 
         /* Responsive */
@@ -660,7 +678,7 @@
                     <button class="add-location-btn" onclick="addLocation()">Add</button>
                 </div>
                 <div class="location-tags" id="locationTags"></div>
-                
+
                 <div class="toggle-switch">
                     <input type="checkbox" id="remoteToggle">
                     <label class="toggle-slider" for="remoteToggle"></label>
@@ -710,7 +728,7 @@
     </div>
 
     <script>
-        const API_BASE = "http://127.0.0.1:8000/api";
+        const API_BASE = "/api";
         let currentStep = 1;
         const totalSteps = 6;
         let locations = [];
@@ -787,7 +805,7 @@
             const errorEl = document.getElementById(`error-step${step}`);
             errorEl.classList.remove('show');
 
-            switch(step) {
+            switch (step) {
                 case 1: // Values
                     const checkedValues = document.querySelectorAll('.step-content[data-step="1"] input[type="checkbox"]:checked');
                     if (checkedValues.length === 0) {
@@ -878,7 +896,7 @@
         function populateSubfields(field) {
             const container = document.getElementById('subfieldOptions');
             const subfields = subfieldMap[field] || subfieldMap["Other"];
-            
+
             container.innerHTML = subfields.map((subfield, index) => `
                 <div class="radio-item">
                     <input type="radio" id="subfield${index}" name="subfield" value="${subfield}">
@@ -891,7 +909,7 @@
         function populateSpecializations(subfield) {
             const container = document.getElementById('specializationOptions');
             const specializations = specializationMap[subfield] || specializationMap["default"];
-            
+
             container.innerHTML = specializations.map((spec, index) => `
                 <div class="radio-item">
                     <input type="radio" id="spec${index}" name="specialization" value="${spec}">
@@ -904,7 +922,7 @@
         function addLocation() {
             const input = document.getElementById('locationInput');
             const location = input.value.trim();
-            
+
             if (location && !locations.includes(location)) {
                 locations.push(location);
                 renderLocationTags();
